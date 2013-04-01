@@ -10,7 +10,7 @@ int main( const int argc, const char *argv[] )
 {
   int port( 80 );
   try {
-    cout << "Hello from the future server app." << endl;
+    cout << "******** Hello from the future server app!" << endl;
   } catch ( const exception &e ) {
     cout << "Error: " << e.what() << endl;
     cerr << "Error: " << e.what() << endl;

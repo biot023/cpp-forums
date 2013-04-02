@@ -4,7 +4,7 @@ INCLUDE_DIRS := include /home/ubuntu/work/src/cpp-netlib
 CXXFLAGS      = -std=c++11 -Wall -g $(addprefix -I,$(INCLUDE_DIRS))
 SRC           = $(wildcard src/*.cpp)
 OBJ           = $(subst .cpp,.o,$(SRC))
-CLEANLIST     = bin/world $(OBJ)
+CLEANLIST     = bin/server $(OBJ)
 LDFLAGS       = -lboost_system -lboost_filesystem -lpthread
 
 all : bin/server

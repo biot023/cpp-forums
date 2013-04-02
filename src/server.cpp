@@ -8,8 +8,7 @@ using namespace std;
 namespace http = boost::network::http;
 
 struct Handler;
-// using server_t = http::server<Handler>;
-typedef http::server<Handler> server_t;
+using server_t = http::server<Handler>;
 
 struct Handler
 {
@@ -27,8 +26,8 @@ int main( int argc, char *argv[] )
     string address( "0.0.0.0" );
     string port( "80" );
     static struct option long_options[] = {
-      { "address", required_argument, 0, 'a' },
-      { "port", required_argument, 0, 'p' }
+      { "address", required_argument, nullptr, 'a' },
+      { "port", required_argument, nullptr, 'p' }
     };
     int opt_index( 0 );
     int opt( getopt_long( argc, argv, "", long_options, &opt_index ) );

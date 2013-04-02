@@ -8,7 +8,8 @@ using namespace std;
 namespace http = boost::network::http;
 
 struct Handler;
-using server_t = http::server<Handler>;
+// using server_t = http::server<Handler>;
+typedef http::server<Handler> server_t;
 
 struct Handler
 {
@@ -17,6 +18,7 @@ struct Handler
     response = server_t::response::stock_reply( server_t::response::ok,
                                                 "<html><body><h1>Hello.</h1></body></html>" );
   }
+  void log( const string &message ) const {}
 };
 
 int main( int argc, char *argv[] )
@@ -25,8 +27,8 @@ int main( int argc, char *argv[] )
     string address( "0.0.0.0" );
     string port( "80" );
     static struct option long_options[] = {
-      { "address", required_argument, nullptr, 'a' },
-      { "port", required_argument, nullptr, 'p' }
+      { "address", required_argument, 0, 'a' },
+      { "port", required_argument, 0, 'p' }
     };
     int opt_index( 0 );
     int opt( getopt_long( argc, argv, "", long_options, &opt_index ) );
@@ -36,11 +38,14 @@ int main( int argc, char *argv[] )
         case 'p': port = optarg; break;
         default: throw runtime_error( "Unhandled option" ); break;
       } // esac
+      opt = getopt_long( argc, argv, "", long_options, &opt_index );
     } // wend
     Handler handler;
-    server_t server( address, port, handler );
+    cout << "About to create server ..." << endl;
+    server_t server( server_t::options( handler ).address( address ).port( port ) );
+    // server_t server( address, port, handler );
+    cout << "Running at " << address << ":" << port << endl;
     server.run();
-    cout << "Running at 0.0.0.0:" << port << endl;
   } catch ( const exception &e ) {
     cout << "Error: " << e.what() << endl;
     cerr << "Error: " << e.what() << endl;
